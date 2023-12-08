@@ -33,7 +33,6 @@ dataset:
   validate_interval: 2
 
 task:
-  _name: sign_to_text
   data: ${oc.env:DATA_DIR}                        #check where we should put the tsv file
   max_source_positions: 1024                  
   max_target_positions: 1024
@@ -54,21 +53,21 @@ task:
 
 model:
   _name: sign2text_transformer
-  encoder_embed_dim: 256
-  encoder_ffn_embed_dim: 1024
-  encoder_attention_heads: 4
+  encoder_embed_dim: 512
+  encoder_ffn_embed_dim: 2048
+  encoder_attention_heads: 8
   encoder_layers: 6
-  decoder_embed_dim: 256
-  decoder_ffn_embed_dim: 1024
-  decoder_attention_heads: 4
-  decoder_layers: 3
-  decoder_output_dim: 256 #Laia: don't touch this
+  decoder_embed_dim: 512
+  decoder_ffn_embed_dim: 2048
+  decoder_attention_heads: 8
+  decoder_layers: 3 # ORIGINAL 3
+  decoder_output_dim: 512 #ORIGINAL 256 #Laia: don't touch this
   layernorm_embedding: True
   share_decoder_input_output_embed: True
-  dropout: 0.3
-  attention_dropout: 0.3
-  activation_dropout: 0.3
-  activation_fn: relu
+  dropout: 0.4
+  attention_dropout: 0.4
+  activation_dropout: 0.4
+  activation_fn: gelu
 
 criterion:
   _name: label_smoothed_cross_entropy

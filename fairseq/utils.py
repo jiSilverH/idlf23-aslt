@@ -553,16 +553,16 @@ def get_activation_fn(activation: str) -> Callable:
         return F.relu
     elif activation == "relu_squared":
         return relu_squared
-    elif activation_type == "relu6":
+    elif activation == "relu6":
         return F.relu6
-    elif activation_type == "prelu":
+    elif activation == "prelu":
         return F.prelu
-    elif activation_type == "selu":
-        return F.selu
-    elif activation_type == "celu":
+    elif activation == "selu":
+        return F.selu4
+    elif activation == "celu":
         return F.celu
     elif activation == "gelu":
-        return gelu
+        return F.gelu
     elif activation == "gelu_fast":
         deprecation_warning(
             "--activation-fn=gelu_fast has been renamed to gelu_accurate"

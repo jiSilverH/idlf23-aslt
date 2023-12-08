@@ -4,6 +4,8 @@ from enum import Enum
 from pathlib import Path
 from typing import List, Union, Optional
 
+import os
+
 import numpy as np
 import pandas as pd
 
@@ -18,6 +20,8 @@ from fairseq.data.data_utils import (
     compute_mask_indices,
     numpy_seed
 )
+
+# import pdb
 
 from fairseq.data.text_compressor import TextCompressor, TextCompressionLevel
 
@@ -53,7 +57,7 @@ class SignFeatsDataset(FairseqDataset):
         assert len(ids) == len(feats_files) == len(offsets) == len(sizes)
 
         self.ids = ids
-        self.feats_files = feats_files
+        self.origin_feats_files = feats_files
         self.offsets = offsets
         self.sizes = sizes
         self.feats_type = feats_type
@@ -65,6 +69,15 @@ class SignFeatsDataset(FairseqDataset):
         )
         self.shuffle = shuffle
         self.skipped_ids = []
+        self.feats_files = []
+        for file in feats_files:
+            if file.startswith('/path_to_features/'):
+                file = file.split('/path_to_features/')[-1]
+                file = "/home/jehan/slt_how2sign_wicv2023/data/" + file
+            elif file.startswith('/home/usuaris/imatge/ltarres/wicv2023/'):
+                file = file.split('/path_to_features/')[-1]
+                file = "/home/jehan/slt_how2sign_wicv2023/data/" + file
+            self.feats_files.append(file)
 
     def filter_by_length(self, min_sample_size, max_sample_size):
         for _id, size in zip(self.ids[:], self.sizes[:]):
@@ -98,10 +111,15 @@ class SignFeatsDataset(FairseqDataset):
                    feats_type=feats_type, **kwargs)
 
     def __getitem__(self, index):
+        # pdb.set_trace()
         _id = self.ids[index]
         feats_file = self.feats_files[index]
+        
         offset = self.offsets[index]
         length = self.sizes[index]
+        # print('feats_file', feats_file)
+        # print('offset', offset)
+        # print('length', length)
         
         if self.feats_type == SignFeatsType.mediapipe:
             with open(feats_file, "rb") as f:

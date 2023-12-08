@@ -212,7 +212,8 @@ def load_checkpoint(cfg: CheckpointConfig, trainer, **passthrough_args):
         cfg.restore_file == "checkpoint_last.pt"
     ):  # default value of restore_file is 'checkpoint_last.pt'
         checkpoint_path = os.path.join(
-            cfg.save_dir, "checkpoint_last{}.pt".format(suffix)
+            # cfg.save_dir, "checkpoint_last{}.pt".format(suffix)
+            cfg.get("save_dir"), "checkpoint_last{}.pt".format(suffix)
         )
         first_launch = not PathManager.exists(checkpoint_path)
         if first_launch and getattr(cfg, "continue_once", None) is not None:
@@ -682,6 +683,9 @@ def _upgrade_state_dict(state):
 
     if "cfg" in state and state["cfg"] is not None:
         cfg = state["cfg"]
+        # print('====debugging====')
+        # print(cfg)
+
         with open_dict(cfg):
             # any upgrades for Hydra-based configs
             if (

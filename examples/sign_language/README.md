@@ -23,6 +23,19 @@ We recommend using the following
 sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b path-to-env/slt-how2sign-wicv2023/bin
 ```
 
+## Error handling
+Envionronment issues
+* AttributeError: module 'importlib_resources' has no attribute 'is_resource'
+* https://github.com/facebookresearch/fairseq/issues/5289
+* ```pip install --upgrade hydra-core omegaconf```
+* ignore conflicts from other packages
+* For testing environment, you should not upgrade aforementioned two packages. We recommend you to make a new environment for the inference.
+
+* ImportError: numpy.core.multiarray failed to import
+* https://github.com/pytorch/pytorch/issues/42441
+* Incomplete numpy installation. Reinstall numpy with pip.
+
+
 ## Downloading the data
 The I3D keypoints and .tsv are in [the dataverse](https://dataverse.csuc.cat/dataset.xhtml?persistentId=doi%3A10.34810%2Fdata693). Once you have them, they should follow this structure:
 ```

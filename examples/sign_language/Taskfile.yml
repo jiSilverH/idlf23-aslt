@@ -996,7 +996,7 @@ tasks:
         msg: Specify the WANDB_ENTITY in the .env file
       - sh: "[[ {{.WANDB_PROJECT}} ]]"
         msg: Specify the WANDB_PROJECT in the .env file
-      - sh: "[ {{.NUM_GPUS}} -gt 0 ]"
+      - sh: "[ {{.NUM_GPUS}} ]"
         msg: Use at least 1 GPU to train the model
       - sh: '[ "{{.EXPERIMENT}}" ]'
         msg: Specify a name for the EXPERIMENT
@@ -1118,7 +1118,9 @@ tasks:
               --sacrebleu-tokenizer 13a \
               --bpe sentencepiece \
               --sentencepiece-model {{.SPM_MODEL}} \
-              --skip-invalid-size-inputs-valid-test > {{.OUT_FILE}}
+              --skip-invalid-size-inputs-valid-test > {{.OUT_FILE}} \
+              {{.DATA_DIR}}
+
         silent: false
     vars:
       SEED: 48151623

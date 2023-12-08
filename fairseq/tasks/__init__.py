@@ -25,6 +25,9 @@ def setup_task(cfg: FairseqDataclass, **kwargs):
     task = None
     task_name = getattr(cfg, "task", None)
 
+    print('=======task name=======:\n', task_name)
+
+
     if isinstance(task_name, str):
         # legacy tasks
         task = TASK_REGISTRY[task_name]

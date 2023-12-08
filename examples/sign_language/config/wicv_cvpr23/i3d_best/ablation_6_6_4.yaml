@@ -55,24 +55,24 @@ task:
 model:
   _name: sign2text_transformer
   encoder_embed_dim: 256
-  encoder_ffn_embed_dim: 1024
+  encoder_ffn_embed_dim: 512
   encoder_attention_heads: 4
   encoder_layers: 6
   decoder_embed_dim: 256
-  decoder_ffn_embed_dim: 1024
+  decoder_ffn_embed_dim: 512
   decoder_attention_heads: 4
-  decoder_layers: 3
+  decoder_layers: 6 # ORIGINAL 3
   decoder_output_dim: 256 #Laia: don't touch this
   layernorm_embedding: True
   share_decoder_input_output_embed: True
   dropout: 0.3
   attention_dropout: 0.3
   activation_dropout: 0.3
-  activation_fn: relu
+  activation_fn: gelu
 
 criterion:
   _name: label_smoothed_cross_entropy
-  label_smoothing: 0.1
+  label_smoothing: 0.2
 
 optimizer:
   _name: adam
