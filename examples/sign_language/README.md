@@ -1,9 +1,11 @@
-# Sign Language Translation from Instructional Videos
-This repository contains the implementation for the Sign Language Translation from Instructional Videos paper, accepted at CVPR WiCV 2023. The citation of the paper is at the end of this README.
-See our project website [here](https://imatge-upc.github.io/slt_how2sign_wicv2023/).
-Download our paper in pdf [here]() and find it on [arXiv](https://arxiv.org/abs/2304.06371).
+# Reimplementation of ```Sign Language Translation from Instructional Videos```
+This repository contains the reimplementation for the Sign Language Translation from Instructional Videos paper.
 
 All the scripts are located inside examples/sign_language/scripts.
+
+## Trained final models
+Trained final models are provided in this google drive link.
+[Link to final models](https://drive.google.com/drive/folders/15yOhxbuHIc_naSJ-nYLe7zotS8FPEsAj?usp=sharing)
 
 ## First steps
 Clone this repository, create the conda environment and install Fairseq:
@@ -124,8 +126,7 @@ python scripts/analyze_fairseq_generate.py --generates-dir path/to/generates --v
 ```
 The weigts of our best-performing model can be found on [the dataverse](https://dataverse.csuc.cat/dataset.xhtml?persistentId=doi%3A10.34810%2Fdata693)
 
-## Citations
-- If you find this work useful, please consider citing:
+## Original Paper
 <i>
 Laia Tarrés, Gerard I. Gallego, Amanda Duarte, Jordi Torres and Xavier Giró-i-Nieto. "Sign Language Translation from Instructional Videos", WCVPR 2023.
 </i>
