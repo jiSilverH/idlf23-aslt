@@ -16,7 +16,15 @@ conda env create -f ./examples/sign_language/environment.yml
 conda activate slt-how2sign-wicv2023
 
 pip install --editable .
+
+python setup.py build_ext --inplace
 ```
+
+```
+import nltk
+nltk.download('punkt')
+```
+
 
 The execution of scripts is managed with [Task](https://taskfile.dev/). Please follow the [installation instructions](https://taskfile.dev/installation/) in the official documentation.
 We recommend using the following
@@ -86,23 +94,6 @@ curl --range 6000000001- -o part4 https://dataverse.csuc.cat/api/access/datafile
 cat part1 part2 part3 part4 > train.zip
 ```
 
-## Training the corresponding sentencepiece model
-Given that our model operated on preprocessed text, we need to build a tokenizer with a lowercased text.
-```bash
-cd examples/sign_language/
-task how2sign:train_sentencepiece_lowercased
-```
-Previously to the call of the function, a `FAIRSEQ_ROOT/examples/sign_language/.env` file should be defined with the following variables:
-```bash
-FAIRSEQ_ROOT: path/to/fairseq
-SAVE_DIR: path/to/tsv
-VOCAB_SIZE: 7000
-FEATS: i3d
-PARTITION: train
-```
-To be able to replicate our results, we provide our trained models, find that in `data/how2sign/vocab`.
-As explained in the paper, we are using rBLEU as a metric. The blacklist can be found in: `FAIRSEQ_ROOT/examples/sign_language/scripts/blacklisted_words.txt`
-
 ## Training 
 As per fairseq documentation, we work with config files that can be found in `CONFIG_DIR = FAIRSEQ_ROOT/examples/sign_language/config/wicv_cvpr23/i3d_best`. Select the name of the .yaml files as the experiment name desired. For the final model, select `baseline_6_3_dp03_wd_2`. As EXPERIMENT_NAME and run:
 ```bash
@@ -135,7 +126,6 @@ Script `python scripts/analyze_fairseq_generate.py` analizes raw data and output
 ```bash
 python scripts/analyze_fairseq_generate.py --generates-dir path/to/generates --vocab-dir path/to/vocab --experiment baseline_6_3_dp03_wd_2 --partition test --checkpoint checkpoint_best
 ```
-The weigts of our best-performing model can be found on [the dataverse](https://dataverse.csuc.cat/dataset.xhtml?persistentId=doi%3A10.34810%2Fdata693)
 
 ## Original Paper
 [Original paper implementation repo](https://github.com/imatge-upc/slt_how2sign_wicv2023)  
