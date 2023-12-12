@@ -1,5 +1,5 @@
 # Reimplementation of ```Sign Language Translation from Instructional Videos```
-This repository contains the reimplementation for the Sign Language Translation from Instructional Videos paper.
+This repository contains the reimplementation for the *Sign Language Translation from Instructional Videos paper*.
 
 All the scripts are located inside examples/sign_language/scripts.
 
@@ -10,8 +10,7 @@ Trained final models are provided in this google drive link.
 ## First steps
 Clone this repository, create the conda environment and install Fairseq:
 ```bash
-git clone git@github.com:imatge-upc/slt_how2sign_wicv2023.git
-cd fairseq
+git clone https://github.com/jiSilverH/idlf23-aslt.git
 
 conda env create -f ./examples/sign_language/environment.yml
 conda activate slt-how2sign-wicv2023
@@ -26,16 +25,18 @@ sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b path-to-env/
 ```
 
 ## Error handling
-Envionronment issues
-* AttributeError: module 'importlib_resources' has no attribute 'is_resource'
-* https://github.com/facebookresearch/fairseq/issues/5289
-* ```pip install --upgrade hydra-core omegaconf```
-* ignore conflicts from other packages
-* For testing environment, you should not upgrade aforementioned two packages. We recommend you to make a new environment for the inference.
+Environment issues
 
-* ImportError: numpy.core.multiarray failed to import
-* https://github.com/pytorch/pytorch/issues/42441
-* Incomplete numpy installation. Reinstall numpy with pip.
+```
+AttributeError: module 'importlib_resources' has no attribute 'is_resource'
+```
+* Referring to [this link](https://github.com/facebookresearch/fairseq/issues/5289), ```pip install --upgrade hydra-core omegaconf``` can solve the problem.
+* Ignore conflicts from other packages. For testing environment, you should not upgrade aforementioned two packages. We recommend you to make a new environment for the inference.
+
+```
+ImportError: numpy.core.multiarray failed to import
+```
+* Referring to [this link](https://github.com/pytorch/pytorch/issues/42441), the error occurs because of incomplete numpy installation. Reinstall numpy with pip.
 
 
 ## Downloading the data
@@ -74,6 +75,16 @@ The I3D keypoints and .tsv are in [the dataverse](https://dataverse.csuc.cat/dat
 Each of the folder partitions contain the corresponding I3D features in .npy files, provided by [previous work](https://imatge-upc.github.io/sl_retrieval/), that correspond to each How2Sign sentence.  
 In addition, we provide the `.tsv` files for all the partitions that contains the metadata about each of the sentences, such as translations, path to `.npy` file, duration. 
 Notice that you might need to manually change the path of the `signs_file` column.
+
+### Dataset downloading TIP
+The training data is big nearly 11GB. Therefore, we recommend you to divide the training data into 4 chunks using the below commands and then concatenate 4 chunks to make the full training dataset.
+```
+curl --range 0-2000000000 -o part1 https://dataverse.csuc.cat/api/access/datafile/51543?gbrecs=true
+curl --range 2000000001-4000000000 -o part2 https://dataverse.csuc.cat/api/access/datafile/51543?gbrecs=true
+curl --range 4000000001-6000000000 -o part3 https://dataverse.csuc.cat/api/access/datafile/51543?gbrecs=true
+curl --range 6000000001- -o part4 https://dataverse.csuc.cat/api/access/datafile/51543?gbrecs=true
+cat part1 part2 part3 part4 > train.zip
+```
 
 ## Training the corresponding sentencepiece model
 Given that our model operated on preprocessed text, we need to build a tokenizer with a lowercased text.
