@@ -138,6 +138,7 @@ python scripts/analyze_fairseq_generate.py --generates-dir path/to/generates --v
 The weigts of our best-performing model can be found on [the dataverse](https://dataverse.csuc.cat/dataset.xhtml?persistentId=doi%3A10.34810%2Fdata693)
 
 ## Original Paper
+[Original paper implementation repo](https://github.com/imatge-upc/slt_how2sign_wicv2023)  
 <i>
 Laia Tarrés, Gerard I. Gallego, Amanda Duarte, Jordi Torres and Xavier Giró-i-Nieto. "Sign Language Translation from Instructional Videos", WCVPR 2023.
 </i>
